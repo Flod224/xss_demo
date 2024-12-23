@@ -1,0 +1,113 @@
+**Title Slide:**
+- **Title:** Understanding and Preventing XSS (Cross-Site Scripting) Attacks
+- **Subtitle:** A Key Aspect of Web Application Security
+- **Your Name:** Mamadou Mounir
+- **Date:** [Insert Presentation Date]
+
+---
+
+**Slide 1: What is Cross-Site Scripting (XSS)?**
+- **Definition:** A web security vulnerability that allows attackers to inject malicious scripts into trusted websites.
+- **Target:** End-users' browsers.
+- **Goal of Attackers:**
+  - Steal sensitive data (e.g., cookies, sessions).
+  - Redirect users to malicious websites.
+  - Perform unauthorized actions on behalf of the user.
+- **Prevalence:** Common in poorly sanitized web applications.
+
+---
+
+**Slide 2: Types of XSS Attacks**
+1. **Reflected XSS:**
+   - Malicious script is embedded in a URL or input and reflected back to the browser.
+   - Example: A user clicks a malicious link.
+2. **Stored XSS:**
+   - Malicious script is stored on the server (e.g., database) and affects multiple users.
+   - Example: A script in a comment section.
+3. **DOM-Based XSS:**
+   - Vulnerability exists in client-side JavaScript.
+   - Example: Manipulating the DOM using unsafe user inputs.
+
+---
+
+**Slide 3: Example of a Reflected XSS Attack**
+- **Scenario:**
+  - A search form in a website doesn’t sanitize inputs.
+  - Malicious input: `<script>alert('Hacked!')</script>`.
+- **Result:**
+  - The script runs in the victim’s browser.
+- **Impact:**
+  - Popup messages.
+  - Data theft using `document.cookie`.
+
+---
+
+**Slide 4: Example of a Stored XSS Attack**
+- **Scenario:**
+  - A user posts a comment containing: `<script>stealCookies()</script>`.
+  - The comment is stored in the database.
+- **Result:**
+  - The script executes whenever another user views the comment.
+- **Impact:**
+  - Mass exploitation of all viewers.
+
+---
+
+**Slide 5: Consequences of XSS Attacks**
+- **For Users:**
+  - Loss of sensitive information (e.g., login credentials).
+  - Redirection to phishing websites.
+  - Unauthorized actions (e.g., sending messages).
+- **For Businesses:**
+  - Reputation damage.
+  - Legal liability.
+  - Potential revenue loss.
+
+---
+
+**Slide 6: How to Prevent XSS Attacks**
+1. **Input Validation and Sanitization:**
+   - Validate all user inputs (e.g., forms, URLs).
+   - Sanitize outputs by escaping special characters (e.g., `<`, `>`).
+2. **Use Security Headers:**
+   - Implement `Content-Security-Policy (CSP)`.
+   - Set `X-XSS-Protection` header.
+3. **Avoid Dangerous Functions:**
+   - Minimize use of `eval()`, `innerHTML`, etc.
+4. **Use Framework Security Features:**
+   - Employ templating engines like Laravel Blade or Django Templates to escape outputs.
+
+---
+
+**Slide 7: Tools to Detect and Mitigate XSS**
+- **Static Code Analysis Tools:**
+  - e.g., SonarQube, Checkmarx.
+- **Web Application Firewalls (WAF):**
+  - e.g., Cloudflare, ModSecurity.
+- **Browser Developer Tools:**
+  - Inspect suspicious scripts and activities.
+- **Penetration Testing Frameworks:**
+  - e.g., OWASP ZAP, Burp Suite.
+
+---
+
+**Slide 8: Demo Overview**
+- **Goal:** Illustrate a real-world XSS attack and mitigation strategies.
+- **Steps:**
+  1. Simulate a vulnerable web application.
+  2. Inject malicious scripts.
+  3. Demonstrate the impact of the attack.
+  4. Apply security measures to prevent the attack.
+
+---
+
+**Slide 9: Conclusion**
+- **Summary:**
+  - XSS is a critical web security vulnerability.
+  - Proper validation, sanitization, and secure coding practices are essential.
+- **Call to Action:**
+  - Regularly audit your applications for vulnerabilities.
+  - Stay updated with security best practices.
+
+---
+
