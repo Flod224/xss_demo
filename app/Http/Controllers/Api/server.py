@@ -63,7 +63,7 @@ class MaliciousServer(BaseHTTPRequestHandler):
 
 # Configuration du serveur
 host = "127.0.0.1"
-port = 8080
+port = 8080  
 server = HTTPServer((host, port), MaliciousServer)
 print(f"Server running on http://{host}:{port}")
 server.serve_forever()

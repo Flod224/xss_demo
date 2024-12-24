@@ -59,8 +59,8 @@
                                         <div class="space-y-4 mt-2">
                                             @foreach ($post->comments as $comment)
                                                 <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                                                    <!-- <p class="text-gray-700 dark:text-gray-300">{!! $comment->content !!}</p> XSS vulnerability -->
-                                                  <p class="text-gray-700 dark:text-gray-300">{{ $comment->content }}</p>   <!-- Solution -->
+                                                   <p class="text-gray-700 dark:text-gray-300">{!! $comment->content !!}</p>  <!--  XSS vulnerability -->
+                                                  <!--<p class="text-gray-700 dark:text-gray-300">{{ $comment->content }}</p>    Solution -->
                                                 </div>
                                             @endforeach
                                         </div>
