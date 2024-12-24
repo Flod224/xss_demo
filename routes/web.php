@@ -1,15 +1,27 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
-Route::post('/comments/name', [CommentController::class, 'storename'])->name('comments.storename');
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('posts', PostController::class);
+    Route::post('posts/{post}/comment', [PostController::class, 'comment'])->name('posts.comment');
 
+    Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
+    Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('profile.updatephoto');
+
+
+});
+
+require __DIR__.'/auth.php';

