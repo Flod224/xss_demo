@@ -22,6 +22,9 @@
                     </div>
                 </form>
                 <?php 
+                // Pour eviter l'attaque par reflexion sur la recherche on peut nettoyer les entrées par :
+                //$search = strip_tags($_GET['search'] ?? ''); // Remove tags
+                //$search = htmlspecialchars(($_GET['search'] ?? ''), ENT_QUOTES, 'UTF-8'); // Encoder en charactètre HTML
                 $search = ($_GET['search'] ?? ''); 
                 echo "<pre>Results for: $search</pre>";
                 ?>

