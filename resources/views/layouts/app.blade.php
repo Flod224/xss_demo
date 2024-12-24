@@ -14,6 +14,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    <x-slot name="logo">
+        <!-- Ancien logo -->
+        <!-- <img src="{{ asset('images/old-logo.png') }}" alt="Old Logo"> -->
+
+        <!-- Nouveau logo -->
+        <img src="{{ asset('umonsmedia.png') }}" alt="New Logo">
+    </x-slot>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')

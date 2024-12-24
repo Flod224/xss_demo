@@ -22,11 +22,12 @@
                     </div>
                 </form>
                 <?php 
+                $search = ($_GET['search'] ?? ''); 
                 // Pour eviter l'attaque par reflexion sur la recherche on peut nettoyer les entrées par :
                 //$search = strip_tags($_GET['search'] ?? ''); // Remove tags
                 //$search = htmlspecialchars(($_GET['search'] ?? ''), ENT_QUOTES, 'UTF-8'); // Encoder en charactètre HTML
-                $search = ($_GET['search'] ?? ''); 
-                echo "<pre>Results for: $search</pre>";
+                
+                echo "<pre style='color: white;'>Results for: $search</pre>";
                 ?>
             </div>
             <!-- Add Advertisement Form -->
@@ -58,8 +59,8 @@
                                         <div class="space-y-4 mt-2">
                                             @foreach ($post->comments as $comment)
                                                 <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                                                    <p class="text-gray-700 dark:text-gray-300">{!! $comment->content !!}</p> <!-- XSS vulnerability -->
-                                                    <!--<p class="text-gray-700 dark:text-gray-300">{{ $comment->content }}</p>  Solution -->
+                                                    <!-- <p class="text-gray-700 dark:text-gray-300">{!! $comment->content !!}</p> XSS vulnerability -->
+                                                  <p class="text-gray-700 dark:text-gray-300">{{ $comment->content }}</p>   <!-- Solution -->
                                                 </div>
                                             @endforeach
                                         </div>

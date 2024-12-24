@@ -29,15 +29,24 @@ class PostController extends Controller
         return back()->with('message', 'Publication ajoutée avec succès');
     }
     
-    public function comment(Request $request, Post $post)
-        {
-            // Vérifie si le champ 'content' est vide
-            if (empty($request->content)) {
-                return back()->withErrors(['content' => 'Le commentaire ne peut pas être vide.']);
-            }
 
+        public function comment(Request $request, Post $post)
+        {
+            $request->validate([
+                'content' => 'required|string',
+            ]);
+
+            // Vulnérabilité ICI
+            $content = $request->only(['content']);
+
+            // Filtrer les balises HTML pour empêcher XSS
+            //$content = strip_tags($content); // Remove tags
+    
+            // Convertir les caractères spéciaux en entités HTML
+            //$content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8'); 
+            
             // Créer un commentaire
-            $post->comments()->create($request->only(['content']));
+            $post->comments()->create($content);
 
             return back();
         }
