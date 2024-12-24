@@ -200,6 +200,13 @@
         }
 
         function confirmname() {
+            const name = document.querySelector('textarea[name="name"]').value;
+            const previewDiv = document.getElementById('confirm');
+            previewDiv.innerHTML = `Your name: ${name}`;
+        }
+        
+        /*
+        function confirmname() {
         var name = document.querySelector('textarea[name="name"]').value;
         if (name.trim() === '') {
             alert('Please enter a name.');
@@ -212,11 +219,7 @@
         }
     }
         
-         /*function confirmname() {
-            const name = document.querySelector('textarea[name="name"]').value;
-            const previewDiv = document.getElementById('confirm');
-            previewDiv.innerHTML = `Your name: ${name}`;
-        }
+         
        
         function confirmname() {
             const name = document.querySelector('textarea[name="name"]').value;

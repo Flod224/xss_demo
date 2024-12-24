@@ -37,8 +37,8 @@ class CommentController extends Controller
         // Convertir les caractères spéciaux en entités HTML
         //$content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8'); 
 
-        //Comment::create(['content' => $request->content]);
-        Comment::create(['content' => $content]);
+        Comment::create(['content' => $request->content]);
+        //Comment::create(['content' => $content]);
 
         return redirect()->route('comments.index')->with('success', 'Comment posted successfully!');
     }
