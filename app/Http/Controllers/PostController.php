@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Ad;
 
 class PostController extends Controller
 {
@@ -25,12 +26,20 @@ class PostController extends Controller
 
     public function store(Request $request) {
         Post::create($request->only(['title', 'content']));
-        return back();
+        return back()->with('message', 'Publication ajoutée avec succès');
     }
     
-    public function comment(Request $request, Post $post) {
-        $post->comments()->create($request->only(['content']));
-        return back();
-    }
+    public function comment(Request $request, Post $post)
+        {
+            // Vérifie si le champ 'content' est vide
+            if (empty($request->content)) {
+                return back()->withErrors(['content' => 'Le commentaire ne peut pas être vide.']);
+            }
+
+            // Créer un commentaire
+            $post->comments()->create($request->only(['content']));
+
+            return back();
+        }
     
 }
